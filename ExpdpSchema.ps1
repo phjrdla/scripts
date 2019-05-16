@@ -34,6 +34,9 @@ Level of expdp dumps compression. Possible values are 'BASIC', 'LOW','MEDIUM','H
 .Parameter dumpfileName
 dumps root filename. Default is expdp.
 
+.Parameter dumpfileChunkSize
+Size in GB of dumpfile chunks. Possible values are 1G, 2G, 4G, 8G, 16G. Default is 2G.
+
 .Parameter estimateOnly
 Estimates the dump size. No data is dumped. Possible values are 'Y','N'. Default is 'Y'.
 
@@ -56,9 +59,10 @@ ExpdpSchema -connectStr orcl -parallel 8 -schema scott -directory DUMPTEMP -dump
 [CmdletBinding()] param(
   [Parameter(Mandatory=$True)] [ValidateLength(4,20)] [ValidatePattern('^[a-zA-Z]+[a-zA-B0-9]+')] [string]$connectStr,
   [ValidateLength(2,12)] [string]$dpUser = 'dp',
-  [ValidateLength(4,12)] [string]$dpPwd = 'dpclv',
+  [ValidateLength(4,12)] [string]$dpPwd = 'LuxVie21c',
   [Parameter(Mandatory=$True)] [ValidateLength(2,40)] [string]$schema,
-  [ValidateRange(1,16)] [int]$parallel = 16,
+  [ValidateRange(1,20)] [int]$parallel = 10,
+  [ValidateSet('1G','2G','4G','8G','16G')] [string]$dumpfileChunkSize = '2G',
   [string]$directory = 'DATAPUMP',
   [ValidateSet('ALL','DATA_ONLY','METADATA_ONLY')] [string]$content = 'ALL',
   [ValidateSet('BASIC','LOW','MEDIUM','HIGH')] [string]$compressionAlgorithm = 'MEDIUM',
@@ -70,16 +74,17 @@ ExpdpSchema -connectStr orcl -parallel 8 -schema scott -directory DUMPTEMP -dump
 $thisScript = $MyInvocation.MyCommand
 write-host "`nThisScript is $thisScript"
 write-host "Parameters are :"
-write-host "          connectStr is $connectStr"
-write-host "              dpUser is $dpUser"
-write-host "              schema is $schema"
-write-host "           directory is $directory"
-write-host "             content is $content"
-write-host "        dumpfileName is $dumpfileName"
-write-host "            parallel is $parallel"
-write-host "             content is $content"
-Write-Host "compressionAlgorithm is $compressionAlgorithm"
-write-host "        estimateOnly is $estimateOnly"
+write-host "           connectStr is $connectStr"
+write-host "               dpUser is $dpUser"
+write-host "               schema is $schema"
+write-host "            directory is $directory"
+write-host "              content is $content"
+write-host "         dumpfileName is $dumpfileName"
+write-host "dumpfileNameChunkSize is $dumpfileChunkSize"
+write-host "             parallel is $parallel"
+write-host "              content is $content"
+Write-Host " compressionAlgorithm is $compressionAlgorithm"
+write-host "         estimateOnly is $estimateOnly"
 
 #$tstamp = get-date -Format 'yyyyMMddTHHmm'
 $tstamp = get-date -Format 'yyyyMMddTHH'
@@ -100,7 +105,7 @@ else {
 }
 
 $logfile      = $dumpfileName + '.txt'
-$parfile      = $dumpfileName + '.par'
+$parfile      = 'c:\temp\' + $dumpfileName + '.par'
 
 If (Test-Path $parfile){
   Remove-Item $parfile
@@ -112,6 +117,7 @@ if ( $estimateOnly -eq 'N' ) {
 JOB_NAME=$job_name
 DIRECTORY=$directory
 DUMPFILE=$dumpfile
+FILESIZE=$dumpfileChunkSize
 CONTENT=$CONTENT
 COMPRESSION=ALL
 COMPRESSION_ALGORITHM=$compressionAlgorithm

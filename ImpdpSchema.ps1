@@ -37,6 +37,9 @@ Datapump directory. Default is DATAPUMP.
 .Parameter content
 Content to import. Possible values are 'ALL','DATA_ONLY','METADATA_ONLY'. Default is 'ALL'.
 
+.Parameter include
+Object to import. Possible values are 'ALL';'TABLE','INDEX', 'VIEW'. Default is 'ALL'.
+
 .Parameter disableArchiveLogging
 To disable archive logging while import. Possible values are 'Y','N'. Default is 'Y'. 
 Parameter has no effect if instance runs in'force logging' mode like Dataguard instances.
@@ -71,14 +74,15 @@ ImpdpSchema -connectStr orcl -parallel 8 -schemaOrg scott -schemaDes bernie -dir
 [CmdletBinding()] param(
   [Parameter(Mandatory=$True) ] [ValidateLength(4,20)] [ValidatePattern('^[a-zA-Z]+[a-zA-B0-9]+')] [string]$connectStr,
   [ValidateLength(2,12)] [string]$dpUser = 'dp',
-  [ValidateLength(4,12)] [string]$dpPwd = 'dpclv',
-  [ValidateLength(0,20)] [string]$schemaOrg = "",
-  [Parameter(Mandatory=$True) ] [ValidateLength(2,20)] [string]$schemaDes,
+  [ValidateLength(4,12)] [string]$dpPwd = 'LuxVie21c',
+  [ValidateLength(0,30)] [string]$schemaOrg = "",
+  [Parameter(Mandatory=$True) ] [ValidateLength(2,30)] [string]$schemaDes,
   [ValidateLength(0,20)] [string]$tspaceOrg = "",
   [ValidateLength(0,20)] [string]$tspaceDes = "",
-  [ValidateRange(1,12)] [int]$parallel = 5,
+  [ValidateRange(1,20)] [int]$parallel = 5,
   [string]$directory= 'DATAPUMP',
   [ValidateSet('ALL','DATA_ONLY','METADATA_ONLY')] [string]$content = 'ALL',
+  [ValidateSet('ALL','TABLE','INDEX','VIEW','CONSTRAINT','GRANT','SCHEMA','PACKAGE','PROCEDURE','FUNCTION')] [string]$include = 'ALL',
   [string]$dumpfileName = 'expdp',
   [ValidateSet('N','Y')] [string]$disableArchiveLogging = 'Y',
   [ValidateSet('NONE','NOCOMPRESS','COMPRESS','OLTP')] [string]$tableCompressionClause = 'NONE',
@@ -98,6 +102,7 @@ write-host "             tspaceDes is $tspaceDes"
 write-host "             directory is $directory"
 write-host "               content is $content"
 write-host "          dumpfileName is $dumpfileName"
+write-host "               include is $include"
 write-host "              parallel is $parallel"
 write-host " disableArchiveLogging is $disableArchiveLogging"
 write-host "tableCompressionClause is $tableCompressionClause"
@@ -138,7 +143,7 @@ else {
 }
 
 $logfile  = $dumpfileName + '_2_' + $schemaDes + '.txt'
-$parfile  = $dumpfileName + '_2_' + $schemaDes + '.par'
+$parfile  = 'c:\temp\' + $dumpfileName + '_2_' + $schemaDes + '.par'
 $sqlfile  = $dumpfileName + '_2_' + $schemaDes + '.sql'
 
 If (Test-Path $parfile){
@@ -176,9 +181,15 @@ TRANSFORM=DISABLE_ARCHIVE_LOGGING:$disableArchiveLogging
 ############################################################################################################################
 # Adapt impdp parameter file
 ############################################################################################################################
+# Import a specific object
+if ( 'INDEX TABLE VIEW CONSTRAINT GRANT SCHEMA PACKAGE PROCEDURE FUNCTION' -match $include ) {
+## write-host "!!!! $include waz matched"
+  $parfile_txt = $parfile_txt + "`nINCLUDE=$include"
+}
+
 # Add PARALLEL to parameter file when needed
 if ( $parallel -gt 1 ) {
-  $parfile_txt = $parfile_txt + "`nPARALLEL=$parallel";
+  $parfile_txt = $parfile_txt + "`nPARALLEL=$parallel"
 }
 
 # ADD table compression clause 
