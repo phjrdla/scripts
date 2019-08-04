@@ -1,0 +1,238 @@
+
+TNS Ping Utility for Linux: Version 12.2.0.1.0 - Production on 04-AUG-2019 11:03:26
+
+Copyright (c) 1997, 2016, Oracle.  All rights reserved.
+
+Used parameter files:
+/u01/app/oracle/product/12.2/dbhome_1/network/admin/sqlnet.ora
+
+
+Used TNSNAMES adapter to resolve the alias
+Attempting to contact (DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = oel2.pb.org)(PORT = 1521))) (CONNECT_DATA = (sid = COSWARE)))
+OK (0 msec)
+OK (10 msec)
+OK (0 msec)
+OK (0 msec)
+OK (0 msec)
+
+TNS Ping Utility for Linux: Version 12.2.0.1.0 - Production on 04-AUG-2019 11:03:26
+
+Copyright (c) 1997, 2016, Oracle.  All rights reserved.
+
+Used parameter files:
+/u01/app/oracle/product/12.2/dbhome_1/network/admin/sqlnet.ora
+
+
+Used TNSNAMES adapter to resolve the alias
+Attempting to contact (DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = oel3.pb.org)(PORT = 1521))) (CONNECT_DATA = (sid = COSWARE)))
+OK (30 msec)
+OK (20 msec)
+OK (0 msec)
+OK (0 msec)
+OK (0 msec)
+
+DATABASE_ROLE	 INSTANCE			OPEN_MODE	     PROTECTION_MODE	  PROTECTION_LEVEL     SWITCHOVER_STATUS
+---------------- ------------------------------ -------------------- -------------------- -------------------- --------------------
+PHYSICAL STANDBY COSWAREC1			READ ONLY WITH APPLY MAXIMUM PERFORMANCE  MAXIMUM PERFORMANCE  NOT ALLOWED
+
+
+DATABASE_ROLE	 INSTANCE			OPEN_MODE	     PROTECTION_MODE	  PROTECTION_LEVEL     SWITCHOVER_STATUS
+---------------- ------------------------------ -------------------- -------------------- -------------------- --------------------
+PRIMARY 	 COSWAREF1			READ WRITE	     MAXIMUM PERFORMANCE  MAXIMUM PERFORMANCE  TO STANDBY
+
+PHYSICAL STANDBY
+DGMGRL for Linux: Release 12.2.0.1.0 - Production on Sun Aug 4 11:03:27 2019
+
+Copyright (c) 1982, 2017, Oracle and/or its affiliates.  All rights reserved.
+
+Welcome to DGMGRL, type "help" for information.
+DGMGRL> Connected to "COSWAREF1"
+Connected as SYSDBA.
+DGMGRL> 
+Configuration - cosware
+
+  Protection Mode: MaxPerformance
+  Members:
+  coswaref1 - Primary database
+    coswarec1 - Physical standby database 
+
+Fast-Start Failover: DISABLED
+
+Configuration Status:
+SUCCESS   (status updated 57 seconds ago)
+
+DGMGRL> DGMGRL> DGMGRL for Linux: Release 12.2.0.1.0 - Production on Sun Aug 4 11:03:41 2019
+
+Copyright (c) 1982, 2017, Oracle and/or its affiliates.  All rights reserved.
+
+Welcome to DGMGRL, type "help" for information.
+DGMGRL> Connected to "COSWAREF1"
+Connected as SYSDBA.
+DGMGRL> 
+Configuration - cosware
+
+  Protection Mode: MaxPerformance
+  Members:
+  coswaref1 - Primary database
+    coswarec1 - Physical standby database 
+
+  Properties:
+    FastStartFailoverThreshold      = '30'
+    OperationTimeout                = '30'
+    TraceLevel                      = 'USER'
+    FastStartFailoverLagLimit       = '30'
+    CommunicationTimeout            = '180'
+    ObserverReconnect               = '0'
+    FastStartFailoverAutoReinstate  = 'TRUE'
+    FastStartFailoverPmyShutdown    = 'TRUE'
+    BystandersFollowRoleChange      = 'ALL'
+    ObserverOverride                = 'FALSE'
+    ExternalDestination1            = ''
+    ExternalDestination2            = ''
+    PrimaryLostWriteAction          = 'CONTINUE'
+    ConfigurationWideServiceName    = 'COSWARE_CFG'
+
+Fast-Start Failover: DISABLED
+
+Configuration Status:
+SUCCESS
+
+DGMGRL> 
+Database - coswaref1
+
+  Role:               PRIMARY
+  Intended State:     TRANSPORT-ON
+  Instance(s):
+    COSWARE
+
+  Properties:
+    DGConnectIdentifier             = 'coswaref1_dgmgrl'
+    ObserverConnectIdentifier       = ''
+    LogXptMode                      = 'ASYNC'
+    RedoRoutes                      = ''
+    DelayMins                       = '0'
+    Binding                         = 'optional'
+    MaxFailure                      = '0'
+    MaxConnections                  = '1'
+    ReopenSecs                      = '300'
+    NetTimeout                      = '30'
+    RedoCompression                 = 'DISABLE'
+    LogShipping                     = 'ON'
+    PreferredApplyInstance          = ''
+    ApplyInstanceTimeout            = '0'
+    ApplyLagThreshold               = '30'
+    TransportLagThreshold           = '30'
+    TransportDisconnectedThreshold  = '30'
+    ApplyParallel                   = 'AUTO'
+    ApplyInstances                  = '0'
+    StandbyFileManagement           = 'AUTO'
+    ArchiveLagTarget                = '0'
+    LogArchiveMaxProcesses          = '4'
+    LogArchiveMinSucceedDest        = '1'
+    DataGuardSyncLatency            = '0'
+    DbFileNameConvert               = 'COSWAREC1, COSWAREF1'
+    LogFileNameConvert              = 'COSWAREC1, COSWAREF1'
+    FastStartFailoverTarget         = ''
+    InconsistentProperties          = '(monitor)'
+    InconsistentLogXptProps         = '(monitor)'
+    SendQEntries                    = '(monitor)'
+    LogXptStatus                    = '(monitor)'
+    RecvQEntries                    = '(monitor)'
+    PreferredObserverHosts          = ''
+    StaticConnectIdentifier         = '(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=oel3.pb.org)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=COSWAREF1_DGMGRL)(INSTANCE_NAME=COSWARE)(SERVER=DEDICATED)))'
+    StandbyArchiveLocation          = '/u04/oradata/archives'
+    AlternateLocation               = ''
+    LogArchiveTrace                 = '0'
+    LogArchiveFormat                = '%t_%s_%r.dbf'
+    TopWaitEvents                   = '(monitor)'
+
+  Log file locations:
+    Alert log               : /u01/app/oracle/diag/rdbms/coswaref1/COSWARE/trace/alert_COSWARE.log
+    Data Guard Broker log   : /u01/app/oracle/diag/rdbms/coswaref1/COSWARE/trace/drcCOSWARE.log
+
+Database Status:
+SUCCESS
+
+DGMGRL> 
+Database - coswarec1
+
+  Role:               PHYSICAL STANDBY
+  Intended State:     APPLY-ON
+  Transport Lag:      0 seconds (computed 1 second ago)
+  Apply Lag:          0 seconds (computed 1 second ago)
+  Average Apply Rate: 7.00 KByte/s
+  Active Apply Rate:  533.00 KByte/s
+  Maximum Apply Rate: 533.00 KByte/s
+  Real Time Query:    ON
+  Instance(s):
+    COSWARE
+
+  Properties:
+    DGConnectIdentifier             = 'coswarec1_dgmgrl'
+    ObserverConnectIdentifier       = ''
+    LogXptMode                      = 'ASYNC'
+    RedoRoutes                      = ''
+    DelayMins                       = '0'
+    Binding                         = 'optional'
+    MaxFailure                      = '0'
+    MaxConnections                  = '1'
+    ReopenSecs                      = '300'
+    NetTimeout                      = '30'
+    RedoCompression                 = 'DISABLE'
+    LogShipping                     = 'ON'
+    PreferredApplyInstance          = ''
+    ApplyInstanceTimeout            = '0'
+    ApplyLagThreshold               = '30'
+    TransportLagThreshold           = '30'
+    TransportDisconnectedThreshold  = '30'
+    ApplyParallel                   = 'AUTO'
+    ApplyInstances                  = '0'
+    StandbyFileManagement           = 'AUTO'
+    ArchiveLagTarget                = '0'
+    LogArchiveMaxProcesses          = '4'
+    LogArchiveMinSucceedDest        = '1'
+    DataGuardSyncLatency            = '0'
+    DbFileNameConvert               = ''
+    LogFileNameConvert              = ''
+    FastStartFailoverTarget         = ''
+    InconsistentProperties          = '(monitor)'
+    InconsistentLogXptProps         = '(monitor)'
+    SendQEntries                    = '(monitor)'
+    LogXptStatus                    = '(monitor)'
+    RecvQEntries                    = '(monitor)'
+    PreferredObserverHosts          = ''
+    StaticConnectIdentifier         = '(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=oel2.pb.org)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=COSWAREC1_DGMGRL)(INSTANCE_NAME=COSWARE)(SERVER=DEDICATED)))'
+    StandbyArchiveLocation          = '/u04/oradata/archives'
+    AlternateLocation               = ''
+    LogArchiveTrace                 = '0'
+    LogArchiveFormat                = '%t_%s_%r.dbf'
+    TopWaitEvents                   = '(monitor)'
+
+  Log file locations:
+    Alert log               : /u01/app/oracle/diag/rdbms/coswarec1/COSWARE/trace/alert_COSWARE.log
+    Data Guard Broker log   : /u01/app/oracle/diag/rdbms/coswarec1/COSWARE/trace/drcCOSWARE.log
+
+Database Status:
+SUCCESS
+
+DGMGRL> DGMGRL> DGMGRL for Linux: Release 12.2.0.1.0 - Production on Sun Aug 4 11:03:46 2019
+
+Copyright (c) 1982, 2017, Oracle and/or its affiliates.  All rights reserved.
+
+Welcome to DGMGRL, type "help" for information.
+DGMGRL> Connected to "COSWAREF1"
+Connected as SYSDBA.
+DGMGRL> Performing switchover NOW, please wait...
+Operation requires a connection to database "coswarec1"
+Connecting ...
+Connected to "COSWAREC1"
+Connected as SYSDBA.
+New primary database "coswarec1" is opening...
+Operation requires start up of instance "COSWARE" on database "coswaref1"
+Starting instance "COSWARE"...
+ORACLE instance started.
+Database mounted.
+Database opened.
+Connected to "COSWAREF1"
+Switchover succeeded, new primary is "coswarec1"
+DGMGRL> DGMGRL> 
